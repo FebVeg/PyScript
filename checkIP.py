@@ -6,7 +6,7 @@ import socket
 import time
 import sys
 
-""" Stampante
+""" Esempio Stampante
 address = "10.202.108.134" 
 port = 9100 # int 
 """
@@ -29,7 +29,7 @@ def logger(log): # funzione che salva i log qual'ora il programma si interrompes
 
 os.system("cls")
 print("-"*55)
-print("Automatic IP Checker - Fabrizio CAGNINI")
+print("Automatic IP Checker - Fabrizio")
 print("-"*55)
 print("Printers port > 9100\nWebsites port > 80\nMicrosoft SMB > 445")
 print("\nMore ports are here: https://it.wikipedia.org/wiki/Lista_di_porte_standard")
