@@ -1,5 +1,5 @@
 # controllo stato di un device collegato in rete
-# Fabrizio Cagnini
+# Fabrizio 
 
 import os 
 import socket
