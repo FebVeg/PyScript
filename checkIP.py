@@ -1,15 +1,10 @@
 # controllo stato di un device collegato in rete
-# Fabrizio 
+# Fabrizio Cagnini
 
 import os 
 import socket
 import time
-import sys
-
-""" Esempio Stampante
-address = "10.202.108.134" 
-port = 9100 # int 
-"""
+import sys 
 
 class bcolors:
     HEADER = '\033[95m'
@@ -29,7 +24,7 @@ def logger(log): # funzione che salva i log qual'ora il programma si interrompes
 
 os.system("cls")
 print("-"*55)
-print("Automatic IP Checker - Fabrizio")
+print("Automatic IP Checker - Fabrizio CAGNINI")
 print("-"*55)
 print("Printers port > 9100\nWebsites port > 80\nMicrosoft SMB > 445")
 print("\nMore ports are here: https://it.wikipedia.org/wiki/Lista_di_porte_standard")
@@ -46,10 +41,14 @@ except Exception as e:
     print(e)
 
 while True:
-    s =  socket.socket() # creo il socket di connessione
-    result = s.connect_ex((address, int_port)) # risultato di connessione
-    s.close() # chiudo il socket
-    data = (time.strftime("%d/%m/%Y %H:%M:%S")) # Data e orario
+    try: 
+        s =  socket.socket() # creo il socket di connessione
+        result = s.connect_ex((address, int_port)) # risultato di connessione
+        s.close() # chiudo il socket
+        data = (time.strftime("%d/%m/%Y %H:%M:%S")) # Data e orario
+    except socket.error as log:
+        print(log)
+        logger(log)
 
     try:
         if result:
@@ -72,4 +71,4 @@ while True:
     except socket.error as log:
         logger(log)
         time.sleep(1)
-        print(e) 
+        print(log) 
