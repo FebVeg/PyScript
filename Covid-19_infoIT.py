@@ -37,10 +37,10 @@ while True:
         lastupdate = soup.find('body').find('div', {'style': 'font-size:13px; color:#999; text-align:center'}) # Casi totali
         coronavirus_data = soup.findAll(id='maincounter-wrap') # Dettagli
 
-        currently_infected_activeCases = soup.find('body').find('div', {'class': 'number-table-main'})
+        currently_infected_activeCases = soup.find('body').find('div', {'class': 'number-table-main'}) # casi attualmente positivi
 
-        mild_activeCases = soup.find('body').find('div', {'style': 'float:left; text-align:center'}).find('span')
-        serious_activeCases = soup.find('body').find('div', {'style': 'float:right; text-align:center'}).find('span')
+        mild_activeCases = soup.find('body').find('div', {'style': 'float:left; text-align:center'}).find('span') # totali in buone condizioni
+        serious_activeCases = soup.find('body').find('div', {'style': 'float:right; text-align:center'}).find('span') # totali gravi
 
         # Titolo 
         if lastupdate:
@@ -73,8 +73,7 @@ while True:
         else:
             print("Error to extract data $serious_activeCases")
 
-        break # per ora lo blocco per fare i test
-        #time.sleep(300)
+        time.sleep(300)
 
     except Exception as e:
         print(e)
