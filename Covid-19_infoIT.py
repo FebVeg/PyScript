@@ -34,11 +34,10 @@ while True:
 
         page = requests.get(URL, headers=headers, verify=True) # normale richiesta al sito
         soup = BeautifulSoup(page.content, 'html.parser') # Elaborazione del Contenuto della pagina
-        lastupdate = soup.find('body').find('div', {'style': 'font-size:13px; color:#999; text-align:center'}) # Casi totali
+
+        lastupdate = soup.find('body').find('div', {'style': 'font-size:13px; color:#999; text-align:center'}) # Ultimo Aggiornamento
         coronavirus_data = soup.findAll(id='maincounter-wrap') # Dettagli
-
         currently_infected_activeCases = soup.find('body').find('div', {'class': 'number-table-main'}) # casi attualmente positivi
-
         mild_activeCases = soup.find('body').find('div', {'style': 'float:left; text-align:center'}).find('span') # totali in buone condizioni
         serious_activeCases = soup.find('body').find('div', {'style': 'float:right; text-align:center'}).find('span') # totali gravi
 
@@ -51,25 +50,26 @@ while True:
         # principali dettagli
         if coronavirus_data:
             for x in coronavirus_data:
-                print(x.text.strip().replace("\n", " "))
+                print(bcolors.BOLD + x.text.strip().replace("\n", " ") + bcolors.ENDC)
         else:
             print("Error to extract data")
 
         # totale infettati in italia
         if currently_infected_activeCases:
-            print("Currently Infected Patiens: " + currently_infected_activeCases.text.strip())
+            print("-"*39)
+            print(bcolors.WARNING + "Currently Infected Patiens: " + bcolors.ENDC + currently_infected_activeCases.text.strip())
         else:
             print("Error to extract $currently_infected_activeCases")
 
         # Totale infettati in buone condizioni
         if mild_activeCases:
-            print("In Mild Conditions: " + mild_activeCases.text)
+            print(bcolors.HEADER + "In Mild Conditions: " + bcolors.ENDC + mild_activeCases.text)
         else:
             print("Error to extract data $mild_activeCases")
 
         # Totale infettati GRAVI
         if serious_activeCases:
-            print("Serious and Critical: " + serious_activeCases.text)
+            print(bcolors.FAIL + "Serious and Critical: " + bcolors.ENDC + serious_activeCases.text)
         else:
             print("Error to extract data $serious_activeCases")
 
