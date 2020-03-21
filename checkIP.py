@@ -1,5 +1,5 @@
 # controllo stato di un device collegato in rete
-# Fabrizio Cagnini
+# FebVeg 
 
 import os 
 import socket
