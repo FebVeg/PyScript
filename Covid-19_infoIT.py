@@ -1,3 +1,4 @@
+# Covid scraper ita, coded by FebVeg
 import requests
 from bs4 import BeautifulSoup
 import os
@@ -15,35 +16,34 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-while True:
-    try:
-        if os.name == "nt":
-            os.system("cls")
-        else:
-            os.system("clear")
+def computer_os():
+    # Controllo sistema operativo
+    if os.name == "nt": # NT è windows
+        os.system("cls") # pulisco il CMD / PS
+    else:
+        os.system("clear") # Pulisco la bash shell
 
-        URL = 'https://www.worldometers.info/coronavirus/country/italy/'
-        headers = {"User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:74.0) Gecko/20100101 Firefox/74.0'} # User Agent
+def worldSituation():
+    try:
+        URL = 'https://www.worldometers.info/coronavirus/'
         #proxy = "https://user:pass@proxy:porta"
         #os.environ['https_proxy'] = proxy
 
-        ultimo_controllo = (time.strftime("%H:%M:%S")) # Data e orario
-        print("\nRiepilogo CORONAVIRUS in Italia \nPer chiudere il programma premi CTRL+C") # titolo
-        print("Ultimo Controllo: " + bcolors.WARNING + ultimo_controllo + bcolors.ENDC) 
-        print("Link: " + URL + "\n")
-
-        page = requests.get(URL, headers=headers, verify=True) # normale richiesta al sito
+        page = requests.get(URL, verify=True) # normale richiesta al sito
         soup = BeautifulSoup(page.content, 'html.parser') # Elaborazione del Contenuto della pagina
 
-        lastupdate = soup.find('body').find('div', {'style': 'font-size:13px; color:#999; text-align:center'}) # Ultimo Aggiornamento
+        # Dati 
+        lastupdate = soup.find('body').find('div', {'style': 'font-size:13px; color:#999; margin-top:5px; text-align:center'}) # Ultimo Aggiornamento
         coronavirus_data = soup.findAll(id='maincounter-wrap') # Dettagli
         currently_infected_activeCases = soup.find('body').find('div', {'class': 'number-table-main'}) # casi attualmente positivi
         mild_activeCases = soup.find('body').find('div', {'style': 'float:left; text-align:center'}).find('span') # totali in buone condizioni
         serious_activeCases = soup.find('body').find('div', {'style': 'float:right; text-align:center'}).find('span') # totali gravi
+        
+        print(bcolors.OKGREEN + soup.title.text + bcolors.ENDC)
 
         # Titolo 
         if lastupdate:
-            print(bcolors.UNDERLINE + lastupdate.text + bcolors.ENDC + "\n")
+            print(lastupdate.text + "\n")
         else:
             print("Error to extracting 'Last update' data from: " + URL)
         
@@ -56,7 +56,7 @@ while True:
 
         # totale infettati in italia
         if currently_infected_activeCases:
-            print("-"*39)
+            print()
             print(bcolors.WARNING + "Currently Infected Patiens: " + bcolors.ENDC + currently_infected_activeCases.text.strip())
         else:
             print("Error to extract $currently_infected_activeCases")
@@ -73,14 +73,52 @@ while True:
         else:
             print("Error to extract data $serious_activeCases")
 
-        time.sleep(300)
-
     except Exception as e:
         print(e)
-        break
-    
-    except KeyboardInterrupt:
-        print("\nChiudo il programma")
-        sys.exit(0)
 
+def italySituation():
+    try:
+        URL = 'http://www.salute.gov.it/portale/nuovocoronavirus/dettaglioContenutiNuovoCoronavirus.jsp?lingua=italiano&id=5351&area=nuovoCoronavirus&menu=vuoto' 
+        page = requests.get(URL, verify=True) # normale richiesta al sito
+        soup = BeautifulSoup(page.content, 'html.parser') # Elaborazione del Contenuto della pagina
 
+        print(bcolors.OKGREEN + soup.title.text + bcolors.ENDC) # Titolo
+
+        # test
+        dati = soup.findAll('div', {'id': 'intestazioneContenuto'}) 
+        for temp in dati:
+            testo = temp.findChildren()[12]
+            div1 = temp.findChildren()[30]
+            div2 = temp.findChildren()[31]
+            div3 = temp.findChildren()[33]
+            div4 = temp.findChildren()[34]
+            div5 = temp.findChildren()[35]
+        for x in testo:
+            print(x.strip())
+        for divs1 in div1:
+            print("\n" + bcolors.WARNING + divs1.strip() + bcolors.ENDC + "\n")
+        for divs2 in div2:
+            print(bcolors.BOLD + divs2.strip() + bcolors.ENDC)
+        for divs3 in div3:
+            print("     " + divs3.strip())
+        for divs4 in div4:
+            print("     " + divs4.strip())
+        for divs5 in div5:
+            print("     " + divs5.strip())
+        
+    except Exception as e:
+        print(e)
+
+try:
+    while True:
+        computer_os()
+        ultimo_controllo = (time.strftime("%H:%M:%S")) # Data e orario
+        print("\nRiepilogo CORONAVIRUS \nPer chiudere il programma premi CTRL+C") # titolo
+        print("Ultimo Controllo: " + bcolors.WARNING + ultimo_controllo + bcolors.ENDC) 
+        print("\nCaricamento dati..", end="\r")
+        worldSituation()
+        print("\nCaricamento dati..", end="\r")
+        italySituation()
+        time.sleep(600)
+except KeyboardInterrupt:
+    print("\nChiusura del programma\n")
