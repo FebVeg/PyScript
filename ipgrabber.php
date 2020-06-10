@@ -5,7 +5,7 @@
 	$dateTime = date('Y/m/d G:i:s');
 	$file = "ip.html";
 	$file = fopen($file, "a");
-	$data = "<pre><b>User IP</b>: $ip <b> Browser</b>: $browser <br><b>Time: </b>$dateTime <br></pre>";
+	$data = "<pre><b>User IP</b>: $ip <br><b>Browser</b>: $browser <br><b>Time: </b>$dateTime <br></pre>";
 	fwrite($file, $data);
 	fclose($file);
 ?> 
