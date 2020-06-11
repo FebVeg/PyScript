@@ -1,4 +1,4 @@
-# Random Password Utility - Fabrizio CAGNINI
+# Random Password Utility - FebVeg
 
 import os
 import sys
