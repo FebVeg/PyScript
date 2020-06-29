@@ -3,7 +3,7 @@ import sys
 import os
 
 # Intro
-print("\nPython - Convert python script to Base64\nCoded by FebVeg\n")
+print("\nPython - Convert strings to Base64\nCoded by FebVeg\n")
 
 
 # Variabili
@@ -11,7 +11,7 @@ currentPath = os.path.dirname(os.path.abspath(__file__)) + "\\" # Workink direct
 text_payload = "encoded_script.txt"
 
 # Input dell'utente
-file_to_enc = input("File: ")
+file_to_enc = input(r"File: ")
 python_payload = input("Type the final name of payload (es. shell.py or pincopalle.py): ")
 
 data = open(file_to_enc).read() # Apro il file in readmode dentro ad una variabile
