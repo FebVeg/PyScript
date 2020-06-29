@@ -25,7 +25,7 @@ if not os.path.isdir(currentPath + "output"):
 
 def creating_encoded_payload():
     try:
-        print("\n[INFO] If you need to use pyinstaller after encoding the payload, you need to add a library!!!")
+        print("\n[INFO] If you need to use pyinstaller after encoding the payload, you need to add the libraries!!!")
         libs = input("[+] Add a library? like (es. ',pynput,win32gui,win32clipboard') or just press ENTER for none: ")
         if libs == "":
             libs = ""
